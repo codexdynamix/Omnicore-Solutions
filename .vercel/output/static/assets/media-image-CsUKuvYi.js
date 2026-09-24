@@ -1,0 +1,1 @@
+import{d as e,p as t}from"./site-DNy_hHVj.js";var n=t();function r({className:t,framed:r=!0,alt:i,...a}){return(0,n.jsx)(`img`,{alt:i??``,className:e(`h-full w-full object-cover`,r&&`outline outline-1 -outline-offset-1 outline-foreground/10`,t),...a})}export{r as t};

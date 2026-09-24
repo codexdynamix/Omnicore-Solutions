@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Omnicore Solutions | Machinery for Zimbabwe’s farms, mines and sites",
+      "hasCanvas": false,
+      "bodyTextLen": 4070,
+      "bodyTextHash": "be9734841d2c7a5a5f186b401a62f66300952d9ec3b17ba144224938b6b7e6df",
+      "bodyTextPrefix": "Omnicore Services Catalogue Hire Projects Insights Contact Get a",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Omnicore Solutions | Machinery for Zimbabwe’s farms, mines and sites",
+      "hasCanvas": false,
+      "bodyTextLen": 3991,
+      "bodyTextHash": "911bb16cceb00db51f655ce1122a049fcc74b95af463c65ef6bb9ffab3903e8a",
+      "bodyTextPrefix": "Omnicore HARARE · NATIONWIDE Machinery for Zimbabwe’s farms, min",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

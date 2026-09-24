@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-background: #f5f5f7;
+  --color-foreground: #1d1d1f;
+  --color-card: #ffffff;
+  --color-card-foreground: #1d1d1f;
+  --color-primary: #1d1d1f;
+  --color-primary-foreground: #f5f5f7;
+  --color-secondary: #e8e8ed;
+  --color-secondary-foreground: #1d1d1f;
+  --color-muted: #ececef;
+  --color-muted-foreground: #6e6e73;
+  --color-accent: #0071e3;
+  --color-accent-foreground: #ffffff;
+  --color-border: #d2d2d7;
+  --color-ring: #0071e3;
+  --color-whatsapp: #1f8a4c;
+  --color-whatsapp-foreground: #ffffff;
+  --color-destructive: #d92d20;
+  --color-destructive-foreground: #ffffff;
+  --color-overlay: rgb(29 29 31 / 0.46);
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 18%, transparent);
+    color: var(--color-foreground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
