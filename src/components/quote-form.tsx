@@ -1,10 +1,11 @@
 import { useState, type FormEvent } from "react";
-import { Check } from "lucide-react";
+import { Check, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { services, whatsappUrl } from "@/data/site";
+import { WhatsAppBadge } from "@/components/ui/official-badges";
 
 const intents = ["Buy", "Hire", "Both", "Not sure"] as const;
 
@@ -13,9 +14,11 @@ type QuoteFormProps = {
   compact?: boolean;
 };
 
-export function QuoteForm({ defaultService = "", compact = false }: QuoteFormProps) {
+export function QuoteForm({ defaultService = "" }: QuoteFormProps) {
   const [sent, setSent] = useState(false);
-  const [wa, setWa] = useState("");
+  const [waUrl, setWaUrl] = useState("");
+  const [selectedIntent, setSelectedIntent] = useState<string>("Buy");
+  const [selectedService, setSelectedService] = useState<string>(defaultService);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,45 +27,66 @@ export function QuoteForm({ defaultService = "", compact = false }: QuoteFormPro
       name: String(form.get("name") ?? "").trim(),
       phone: String(form.get("phone") ?? "").trim(),
       email: String(form.get("email") ?? "").trim(),
-      service: String(form.get("service") ?? "").trim(),
-      intent: String(form.get("intent") ?? "").trim(),
+      service: selectedService || String(form.get("service") ?? "").trim(),
+      intent: selectedIntent,
       message: String(form.get("message") ?? "").trim(),
+      location: String(form.get("location") ?? "").trim(),
       at: new Date().toISOString(),
     };
+
     try {
       localStorage.setItem("omnicore-last-quote", JSON.stringify(payload));
     } catch {
       /* private mode */
     }
+
     const text = [
-      `Hello Omnicore, I'm ${payload.name}.`,
-      payload.intent ? `Intent: ${payload.intent}.` : "",
-      payload.service ? `Service: ${payload.service}.` : "",
-      payload.message,
+      `Hello Omnicore Harare Desk, I need a machinery quote.`,
+      `Name: ${payload.name || "Client"}.`,
+      `Requirement: ${payload.intent}.`,
+      payload.service ? `Category: ${payload.service}.` : "",
+      payload.location ? `Site/Location: ${payload.location}.` : "",
+      payload.message ? `Details: ${payload.message}.` : "",
       payload.phone ? `Phone: ${payload.phone}` : "",
       payload.email ? `Email: ${payload.email}` : "",
     ]
       .filter(Boolean)
-      .join(" ");
+      .join("\n");
+
     const url = whatsappUrl(text);
-    setWa(url);
+    setWaUrl(url);
     setSent(true);
-    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   if (sent) {
     return (
-      <div className="rounded-3xl bg-card p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.06)]">
-        <div className="flex size-10 items-center justify-center rounded-full bg-whatsapp/10 text-whatsapp">
-          <Check className="size-5" />
+      <div className="rounded-xl bg-white p-6 sm:p-8 border border-slate-200 shadow-md animate-in fade-in zoom-in-95 duration-200">
+        <div className="flex size-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+          <Check className="size-6" />
         </div>
-        <h3 className="mt-4 text-xl font-semibold tracking-tight">Quote started on WhatsApp</h3>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          If a new chat did not open, use the button below. We typically reply the same working day.
+        <h3 className="mt-4 text-xl font-bold tracking-tight text-slate-900">
+          Ready to Send on WhatsApp
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          Your machinery inquiry has been formatted. Click below to launch your chat with the Omnicore Harare engineering desk.
         </p>
-        <Button asChild variant="whatsapp" className="mt-6">
-          <a href={wa}>Open WhatsApp</a>
-        </Button>
+
+        <div className="mt-6 flex flex-col gap-3">
+          <a
+            href={waUrl}
+            className="flex items-center justify-center gap-2 rounded-lg bg-[#25D366] px-5 py-3 text-sm font-bold text-white shadow-xs hover:bg-[#20bd5a] transition-colors"
+          >
+            <WhatsAppBadge compact label="Continue on WhatsApp" />
+          </a>
+
+          <button
+            type="button"
+            onClick={() => setSent(false)}
+            className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors py-1"
+          >
+            ← Modify inquiry details
+          </button>
+        </div>
       </div>
     );
   }
@@ -70,108 +94,131 @@ export function QuoteForm({ defaultService = "", compact = false }: QuoteFormPro
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-3xl bg-card p-6 shadow-[0_0_0_1px_rgba(0,0,0,0.06)] sm:p-8"
+      className="flex flex-col rounded-xl bg-white p-6 sm:p-8 border border-slate-200/90 shadow-sm"
     >
-      {!compact ? (
-        <div className="mb-6">
-          <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-            WhatsApp-first quoting
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold tracking-tight text-slate-900">
+            Request an Equipment Quote
+          </h2>
+          <p className="mt-1 text-xs text-slate-500">
+            Direct response from Cranborne desk with stock status & rates.
           </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight">Tell us the job.</h2>
         </div>
-      ) : null}
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Name" htmlFor="name">
-          <Input id="name" name="name" required autoComplete="name" placeholder="Your name" />
-        </Field>
-        <Field label="Phone / WhatsApp" htmlFor="phone">
-          <Input
-            id="phone"
-            name="phone"
-            required
-            autoComplete="tel"
-            inputMode="tel"
-            placeholder="07…"
-          />
-        </Field>
-        <Field label="Email (optional)" htmlFor="email" className="sm:col-span-2">
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            placeholder="you@company.co.zw"
-          />
-        </Field>
-        <Field label="Service line" htmlFor="service">
-          <select
-            id="service"
-            name="service"
-            defaultValue={defaultService}
-            className="flex h-11 w-full rounded-xl bg-card px-3.5 text-sm shadow-[0_0_0_1px_rgba(0,0,0,0.08)] focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_var(--color-background),0_0_0_4px_var(--color-ring)]"
-          >
-            <option value="">Select…</option>
-            {services.map((service) => (
-              <option key={service.slug} value={service.title}>
-                {service.title}
-              </option>
-            ))}
-            <option value="Catalogue item">Something in the catalogue</option>
-            <option value="Other">Other</option>
-          </select>
-        </Field>
-        <Field label="Buy or hire" htmlFor="intent">
-          <select
-            id="intent"
-            name="intent"
-            defaultValue="Not sure"
-            className="flex h-11 w-full rounded-xl bg-card px-3.5 text-sm shadow-[0_0_0_1px_rgba(0,0,0,0.08)] focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_var(--color-background),0_0_0_4px_var(--color-ring)]"
-          >
-            {intents.map((intent) => (
-              <option key={intent} value={intent}>
-                {intent}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="What do you need?" htmlFor="message" className="sm:col-span-2">
-          <Textarea
-            id="message"
-            name="message"
-            required
-            placeholder="Machine, site, dates, tonnes or cubic metres — whatever you know."
-          />
-        </Field>
+        <WhatsAppBadge compact label="Instant Quoting" />
       </div>
 
-      <Button type="submit" className="mt-6 w-full sm:w-auto" size="lg">
-        Send via WhatsApp
+      <div className="mt-6 space-y-4">
+        {/* Name and Phone */}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="quote-name" className="text-xs font-semibold text-slate-700">
+              Your Name / Company *
+            </Label>
+            <Input
+              id="quote-name"
+              name="name"
+              required
+              placeholder="e.g. Tendai Moyo / Mazowe Mining Co."
+              className="rounded-lg text-sm border-slate-200 focus:border-sky-500"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="quote-phone" className="text-xs font-semibold text-slate-700">
+              WhatsApp / Mobile Phone *
+            </Label>
+            <Input
+              id="quote-phone"
+              name="phone"
+              type="tel"
+              required
+              placeholder="+263 7..."
+              className="rounded-lg text-sm border-slate-200 focus:border-sky-500"
+            />
+          </div>
+        </div>
+
+        {/* Intent Select (Buy / Hire / Both) */}
+        <div className="space-y-1.5">
+          <Label className="text-xs font-semibold text-slate-700">Inquiry Type</Label>
+          <div className="grid grid-cols-4 gap-2">
+            {intents.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setSelectedIntent(item)}
+                className={`h-9 rounded-md text-xs font-medium transition-colors border ${
+                  selectedIntent === item
+                    ? "bg-slate-900 text-white border-slate-900 shadow-2xs"
+                    : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Service Line Selection */}
+        <div className="space-y-1.5">
+          <Label htmlFor="quote-service" className="text-xs font-semibold text-slate-700">
+            Machinery Category
+          </Label>
+          <select
+            id="quote-service"
+            name="service"
+            value={selectedService}
+            onChange={(e) => setSelectedService(e.target.value)}
+            className="flex h-10 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-2xs focus:border-sky-500 focus:outline-hidden"
+          >
+            <option value="">Select machinery line...</option>
+            {services.map((service) => (
+              <option key={service.slug} value={service.title}>
+                {service.title} ({service.eyebrow})
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Site Location */}
+        <div className="space-y-1.5">
+          <Label htmlFor="quote-location" className="text-xs font-semibold text-slate-700">
+            Site / Delivery Location (in Zimbabwe)
+          </Label>
+          <Input
+            id="quote-location"
+            name="location"
+            placeholder="e.g. Kadoma Gold Claim, Norton Farm, Borrowdale Site"
+            className="rounded-lg text-sm border-slate-200 focus:border-sky-500"
+          />
+        </div>
+
+        {/* Message */}
+        <div className="space-y-1.5">
+          <Label htmlFor="quote-message" className="text-xs font-semibold text-slate-700">
+            Machine Specifications / Tonnes / Pour Volume
+          </Label>
+          <Textarea
+            id="quote-message"
+            name="message"
+            rows={3}
+            placeholder="Describe the machine you need, tonnes per hour, duration of hire or power requirements..."
+            className="rounded-lg text-sm border-slate-200 focus:border-sky-500 resize-none"
+          />
+        </div>
+      </div>
+
+      <Button
+        type="submit"
+        className="mt-6 h-11 w-full rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-xs"
+      >
+        <Send className="size-4 mr-2" />
+        Generate Quote on WhatsApp
       </Button>
-      <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-        Opens WhatsApp with your message. Indicative catalogue prices are confirmed before any payment.
+
+      <p className="mt-3 text-center text-[11px] text-slate-500">
+        Strict confidentiality. No spam. Quoted directly by Harare engineering staff.
       </p>
     </form>
-  );
-}
-
-function Field({
-  label,
-  htmlFor,
-  className,
-  children,
-}: {
-  label: string;
-  htmlFor: string;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className={className}>
-      <Label htmlFor={htmlFor} className="mb-1.5 block">
-        {label}
-      </Label>
-      {children}
-    </div>
   );
 }

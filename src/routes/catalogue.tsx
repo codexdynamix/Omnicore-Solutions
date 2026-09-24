@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { EquipmentCard } from "@/components/equipment-card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { equipment, services, type Category, type Intent } from "@/data/site";
+import { equipment, services, type Category, type Intent, whatsappUrl } from "@/data/site";
+import { WhatsAppBadge } from "@/components/ui/official-badges";
 
 type CatalogueSearch = {
   category?: Category;
@@ -20,11 +21,11 @@ export const Route = createFileRoute("/catalogue")({
   }),
   head: () => ({
     meta: [
-      { title: "Equipment Catalogue | Sale & Hire | Omnicore Solutions" },
+      { title: "Equipment Catalogue | Sale & Hire Zimbabwe | Omnicore Solutions" },
       {
         name: "description",
         content:
-          "Filterable catalogue of mining, construction, farming and industrial machinery for sale and hire in Zimbabwe. Indicative USD prices, confirm on WhatsApp.",
+          "Searchable catalogue of mining, construction, farming and industrial machinery for sale and hire in Zimbabwe. Real stock at Cranborne yard, Harare.",
       },
     ],
   }),
@@ -71,84 +72,124 @@ function CataloguePage() {
   }
 
   const chips: { label: string; category: "all" | Category }[] = [
-    { label: "All lines", category: "all" },
+    { label: "All Machinery", category: "all" },
     ...services.map((service) => ({ label: service.navLabel, category: service.slug })),
   ];
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-      <p className="text-xs font-medium tracking-[0.18em] text-muted-foreground uppercase">
-        Catalogue
-      </p>
-      <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
-        Sale and hire, in one list.
-      </h1>
-      <p className="mt-4 max-w-2xl text-muted-foreground">
-        Indicative USD prices where we publish them. Hire rates on request. Confirm stock and freight
-        on WhatsApp before you pay.
-      </p>
-
-      <div className="relative mt-8 max-w-md">
-        <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          value={query}
-          onChange={(event) => {
-            const value = event.target.value;
-            setQuery(value);
-            setFilter({ q: value });
-          }}
-          placeholder="Search crushers, pumps, mixers…"
-          className="pl-10"
-          aria-label="Search equipment"
-        />
-      </div>
-
-      <div className="mt-6 flex flex-wrap gap-2">
-        {(["all", "sale", "hire"] as const).map((value) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => setFilter({ intent: value })}
-            className={cn(
-              "h-10 rounded-full px-4 text-sm font-medium transition-colors duration-150",
-              intent === value
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-secondary-foreground hover:bg-border",
-            )}
-          >
-            {value === "all" ? "Sale & hire" : value === "sale" ? "For sale" : "For hire"}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-3 flex flex-wrap gap-2">
-        {chips.map((chip) => (
-          <button
-            key={chip.category}
-            type="button"
-            onClick={() => setFilter({ category: chip.category })}
-            className={cn(
-              "h-10 rounded-full px-4 text-sm font-medium transition-colors duration-150",
-              category === chip.category
-                ? "bg-primary text-primary-foreground"
-                : "bg-card text-foreground shadow-[0_0_0_1px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.14)]",
-            )}
-          >
-            {chip.label}
-          </button>
-        ))}
-      </div>
-
-      <p className="mt-6 text-sm text-muted-foreground tabular-nums">
-        {filtered.length} machine{filtered.length === 1 ? "" : "s"}
-      </p>
-
-      {filtered.length === 0 ? (
-        <p className="mt-10 text-muted-foreground">
-          Nothing matches. Clear filters, or WhatsApp the spec — we may have it inbound.
+    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
+      {/* Header */}
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold tracking-widest text-slate-500 uppercase">
+            Machinery Inventory & Hire Fleet
+          </span>
+          <span className="text-slate-300">·</span>
+          <span className="text-xs text-amber-600 font-semibold">Harare Cranborne Yard</span>
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+          Sale & plant hire catalogue.
+        </h1>
+        <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+          Browse verified machinery in stock. Indicative USD pricing shown where standardized. Confirm availability, custom configurations, and nationwide transport directly on WhatsApp.
         </p>
+      </div>
+
+      {/* Filter and Search Bar */}
+      <div className="mt-8 rounded-xl border border-slate-200/90 bg-white p-4 shadow-xs space-y-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          {/* Search box */}
+          <div className="relative flex-1 max-w-md">
+            <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-slate-400" />
+            <Input
+              value={query}
+              onChange={(event) => {
+                const value = event.target.value;
+                setQuery(value);
+                setFilter({ q: value });
+              }}
+              placeholder="Search crushers, concrete pumps, feed mills, excavators…"
+              className="pl-10 text-sm border-slate-200 focus:border-sky-500 rounded-lg"
+              aria-label="Search equipment"
+            />
+          </div>
+
+          {/* Mode Switch (Sale / Hire / All) */}
+          <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-1">
+            {(["all", "sale", "hire"] as const).map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setFilter({ intent: value })}
+                className={cn(
+                  "rounded-md px-3.5 py-1.5 text-xs font-semibold transition-all duration-150",
+                  intent === value
+                    ? "bg-white text-slate-900 shadow-2xs"
+                    : "text-slate-600 hover:text-slate-900",
+                )}
+              >
+                {value === "all" ? "All Options" : value === "sale" ? "For Sale" : "Plant Hire"}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Category Chips Bar */}
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
+          <span className="text-xs font-semibold text-slate-400 mr-1 flex items-center gap-1">
+            <SlidersHorizontal className="size-3" />
+            Filter:
+          </span>
+          {chips.map((chip) => (
+            <button
+              key={chip.category}
+              type="button"
+              onClick={() => setFilter({ category: chip.category })}
+              className={cn(
+                "rounded-md px-3 py-1 text-xs font-medium transition-colors duration-150",
+                category === chip.category
+                  ? "bg-slate-900 text-white font-semibold"
+                  : "bg-slate-50 text-slate-700 border border-slate-200/80 hover:bg-slate-100",
+              )}
+            >
+              {chip.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Results Count & Quick Help */}
+      <div className="mt-6 flex items-center justify-between text-xs text-slate-500">
+        <span className="font-semibold text-slate-700">
+          Showing <strong className="text-slate-900">{filtered.length}</strong> available machine{filtered.length === 1 ? "" : "s"}
+        </span>
+
+        <a
+          href={whatsappUrl("Hello Omnicore Harare Desk — I am looking for a machine not listed on the website.")}
+          className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 hover:underline"
+        >
+          <WhatsAppBadge compact label="Can't find a model? Ask on WhatsApp" />
+        </a>
+      </div>
+
+      {/* Grid */}
+      {filtered.length === 0 ? (
+        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-10 text-center shadow-xs">
+          <h3 className="text-base font-bold text-slate-900">No machinery matched your filters</h3>
+          <p className="mt-1 text-xs text-slate-500">
+            We frequently have equipment in transit or arriving at Cranborne. Ask our desk directly.
+          </p>
+          <div className="mt-4 flex justify-center">
+            <a
+              href={whatsappUrl(`Hello Omnicore, I am searching for "${query}". Do you have this in stock?`)}
+              className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-[#20bd5a]"
+            >
+              <WhatsAppBadge compact label="Inquire on WhatsApp" />
+            </a>
+          </div>
+        </div>
       ) : (
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item) => (
             <EquipmentCard key={item.id} item={item} />
           ))}
