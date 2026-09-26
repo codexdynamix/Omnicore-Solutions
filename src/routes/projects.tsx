@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MediaImage } from "@/components/media-image";
 import { projects, whatsappUrl } from "@/data/site";
 import { WhatsAppBadge } from "@/components/ui/official-badges";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
@@ -20,63 +20,59 @@ export const Route = createFileRoute("/projects")({
 
 function ProjectsPage() {
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
+    <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
       {/* Header */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-            Site Deployments
-          </span>
-          <span className="text-slate-300">·</span>
-          <span className="text-xs text-amber-600 font-semibold">Zimbabwe Field Records</span>
-        </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+        <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
+          Field Deployments · Zimbabwe
+        </p>
+        <h1 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-5xl">
           Machinery on the job.
         </h1>
-        <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          Heavy equipment buyers want to verify plant performance on real ground. Here are active sites, mining claims, and commercial yards equipped and supported by Omnicore Solutions.
+        <p className="mt-1 max-w-2xl text-sm leading-relaxed text-[#6e6e73]">
+          Active sites, mining claims, and commercial facilities equipped and supported by Omnicore Solutions from Cranborne, Harare.
         </p>
       </div>
 
       {/* Projects Grid */}
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
+      <div className="mt-12 grid gap-6 md:grid-cols-2">
         {projects.map((project) => (
           <article
             key={project.id}
-            className="group flex flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md"
+            className="group flex flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white shadow-xs transition-all duration-300 hover:border-black/[0.12] hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)]"
           >
-            <div className="relative aspect-16/10 overflow-hidden bg-slate-100">
+            <div className="relative aspect-16/10 overflow-hidden bg-[#f5f5f7]">
               <MediaImage
                 src={project.image}
                 alt={project.imageAlt}
-                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
               />
-              <div className="absolute top-3 left-3">
-                <span className="inline-flex items-center gap-1 rounded-md bg-slate-900/90 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-xs shadow-2xs">
-                  <MapPin className="size-3 text-amber-400" />
+              <div className="absolute top-4 left-4">
+                <span className="inline-flex items-center gap-1 rounded-full bg-white/85 backdrop-blur-md px-3 py-1 text-xs font-medium text-[#1d1d1f] border border-black/[0.06]">
+                  <MapPin className="size-3 text-[#0071e3]" />
                   {project.location}
                 </span>
               </div>
             </div>
 
-            <div className="flex flex-1 flex-col p-6">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="flex flex-1 flex-col p-6 sm:p-8">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">
                 {project.sector}
               </span>
-              <h2 className="mt-1 text-xl font-bold tracking-tight text-slate-900 group-hover:text-sky-600 transition-colors">
+              <h2 className="mt-1.5 text-xl font-semibold tracking-tight text-[#1d1d1f]">
                 {project.title}
               </h2>
-              <p className="mt-2.5 flex-1 text-xs leading-relaxed text-slate-600">
+              <p className="mt-2 flex-1 text-xs sm:text-sm leading-relaxed text-[#6e6e73]">
                 {project.body}
               </p>
 
-              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-xs text-slate-500 font-medium">Zimbabwe Commissioned</span>
+              <div className="mt-6 pt-4 border-t border-black/[0.04] flex items-center justify-between">
+                <span className="text-xs text-[#86868b]">Zimbabwe Commissioned</span>
                 <a
                   href={whatsappUrl(`Hello Omnicore, I saw the project "${project.title}" and would like a similar machinery setup.`)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:underline"
+                  className="inline-flex items-center gap-1.5"
                 >
-                  <WhatsAppBadge compact label="Inquire Similar Plant" />
+                  <WhatsAppBadge compact label="Inquire Similar Setup" />
                 </a>
               </div>
             </div>

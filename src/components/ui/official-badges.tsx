@@ -6,125 +6,136 @@ interface BadgeProps {
   compact?: boolean;
 }
 
-/** Official WhatsApp Badge with authentic icon and #25D366 brand color */
+/**
+ * Authentic WhatsApp Icon with speech bubble and phone handset.
+ * Uses a refined, natural WhatsApp deep-forest tone (#128C7E / #25D366 balanced)
+ * avoiding harsh radioactive neon.
+ */
+export function WhatsAppIcon({ className = "size-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      {/* Speech bubble outline with tail */}
+      <path
+        fill="#25D366"
+        d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.38 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2Z"
+      />
+      {/* Handset glyph in white */}
+      <path
+        fill="#FFFFFF"
+        d="M17.47 14.38C17.17 14.23 15.71 13.51 15.44 13.41C15.17 13.31 14.97 13.26 14.77 13.56C14.57 13.86 14 14.53 13.83 14.73C13.66 14.93 13.49 14.95 13.19 14.8C12.89 14.65 11.93 14.34 10.8 13.33C9.92 12.54 9.32 11.57 9.15 11.27C8.98 10.97 9.13 10.81 9.28 10.66C9.41 10.53 9.58 10.31 9.73 10.14C9.88 9.97 9.93 9.84 10.03 9.64C10.13 9.44 10.08 9.27 10 9.12C9.93 8.97 9.33 7.51 9.09 6.91C8.84 6.33 8.6 6.41 8.42 6.4C8.24 6.39 8.04 6.39 7.84 6.39C7.64 6.39 7.32 6.46 7.05 6.76C6.78 7.06 6.01 7.78 6.01 9.24C6.01 10.7 7.08 12.11 7.22 12.31C7.37 12.51 9.32 15.51 12.3 16.8C13.01 17.11 13.56 17.29 13.99 17.43C14.7 17.65 15.35 17.62 15.86 17.55C16.43 17.46 17.62 16.83 17.87 16.13C18.12 15.44 18.12 14.84 18.04 14.72C17.97 14.6 17.77 14.53 17.47 14.38Z"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Natural, balanced WhatsApp Badge:
+ * Uses natural forest-emerald tones (#1f9d55 to #128C7E) with subtle shadow
+ * so it is clearly recognizable as WhatsApp without being harsh neon or washed out.
+ */
 export function WhatsAppBadge({ className, label = "WhatsApp", compact = false }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium transition-transform duration-150 active:scale-95",
-        "bg-[#25D366] text-white shadow-xs hover:bg-[#20bd5a]",
-        compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-xs",
+        "inline-flex items-center gap-1.5 rounded-full font-semibold transition-all duration-200 shadow-2xs",
+        "bg-[#1fa855] text-white hover:bg-[#1b934b] active:scale-95 border border-[#1b934b]",
+        compact ? "px-2.5 py-1 text-xs" : "px-3.5 py-1.5 text-xs sm:text-sm",
         className,
       )}
     >
-      <svg className="size-3.5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.588-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.396-10.416c-5.518 0-10 4.482-10 10 0 1.911.537 3.699 1.468 5.228l-1.535 5.606 5.759-1.51c1.474.839 3.182 1.314 4.996 1.314 5.518 0 10-4.482 10-10s-4.482-10-10-10z" />
-      </svg>
-      <span>{label}</span>
+      <WhatsAppIcon className={compact ? "size-3.5 shrink-0" : "size-4 shrink-0"} />
+      <span className="tracking-tight">{label}</span>
     </span>
   );
 }
 
-/** Official Gmail Badge with authentic Google colors and envelope icon */
-export function GmailBadge({ className, label = "Gmail", compact = false }: BadgeProps) {
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium transition-transform duration-150 active:scale-95",
-        "bg-white text-slate-800 border border-slate-200 shadow-2xs hover:border-slate-300",
-        compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-xs",
-        className,
-      )}
-    >
-      <svg className="size-3.5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          fill="#4285F4"
-          d="M22 6.5l-10 7.5L2 6.5V19c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V6.5z"
-        />
-        <path
-          fill="#EA4335"
-          d="M2 5v1.5l10 7.5 10-7.5V5c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1z"
-        />
-        <path fill="#FBBC05" d="M2 6.5L12 14 2 20V6.5z" opacity="0.3" />
-        <path fill="#34A853" d="M22 6.5L12 14l10 6V6.5z" opacity="0.3" />
-      </svg>
-      <span>{label}</span>
-    </span>
-  );
-}
-
-/** Official Google Maps Pin Badge */
+/** Official Google Maps Badge with genuine 4-color pin and clean card pill */
 export function GoogleMapsBadge({ className, label = "Google Maps", compact = false }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium transition-transform duration-150 active:scale-95",
-        "bg-[#4285F4] text-white shadow-2xs hover:bg-[#3367d6]",
-        compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-xs",
+        "inline-flex items-center gap-2 rounded-full font-medium transition-all duration-200 shadow-2xs",
+        "bg-white text-[#3c4043] border border-[#dadce0] hover:bg-[#f8f9fa] hover:border-[#bdc1c6] active:scale-95",
+        compact ? "px-3 py-1 text-xs" : "px-4 py-2 text-xs sm:text-sm",
         className,
       )}
     >
-      <svg className="size-3.5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+      <svg className="size-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="#4285F4"
+          d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.12.48 1.52 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7z"
+        />
+        <path
+          fill="#EA4335"
+          d="M12 2C8.13 2 5 5.13 5 9c0 1.74.63 3.34 1.69 4.58L12 6.5l5.31 7.08C18.37 12.34 19 10.74 19 9c0-3.87-3.13-7-7-7z"
+        />
+        <path
+          fill="#FBBC04"
+          d="M6.69 13.58C7.94 15.05 9.77 17.58 12 20.5c2.23-2.92 4.06-5.45 5.31-6.92L12 6.5l-5.31 7.08z"
+        />
+        <circle cx="12" cy="9" r="2.5" fill="#34A853" />
       </svg>
       <span>{label}</span>
     </span>
   );
 }
 
-/** Official LinkedIn Badge */
-export function LinkedInBadge({ className, label = "LinkedIn", compact = false }: BadgeProps) {
+/** Official Gmail Badge with authentic 4-color M logo and crisp card pill */
+export function GmailBadge({ className, label = "Email Desk", compact = false }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium transition-transform duration-150 active:scale-95",
-        "bg-[#0A66C2] text-white shadow-2xs hover:bg-[#084e96]",
-        compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-xs",
+        "inline-flex items-center gap-2 rounded-full font-medium transition-all duration-200 shadow-2xs",
+        "bg-white text-[#3c4043] border border-[#dadce0] hover:bg-[#f8f9fa] hover:border-[#bdc1c6] active:scale-95",
+        compact ? "px-3 py-1 text-xs" : "px-4 py-2 text-xs sm:text-sm",
         className,
       )}
     >
-      <svg className="size-3.5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+      <svg className="size-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="#4285F4"
+          d="M20 18h-2V9.5L12 14 6 9.5V18H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h1.5L12 9l6.5-5H20c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2z"
+        />
+        <path fill="#EA4335" d="M18.5 4H20c1.1 0 2 .9 2 2v2.5L12 14 2 8.5V6c0-1.1.9-2 2-2h1.5L12 9l6.5-5z" />
+        <path fill="#FBBC04" d="M2 6v2.5L12 14 22 8.5V6H2z" opacity="0.1" />
       </svg>
       <span>{label}</span>
     </span>
   );
 }
 
-/** Official Facebook Badge */
-export function FacebookBadge({ className, label = "Facebook", compact = false }: BadgeProps) {
+/** Official Phone Calling Badge with authentic telecom blue and handset */
+export function PhoneBadge({ className, label = "Call Desk", compact = false }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium transition-transform duration-150 active:scale-95",
-        "bg-[#1877F2] text-white shadow-2xs hover:bg-[#1565d8]",
-        compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-xs",
+        "inline-flex items-center gap-2 rounded-full font-medium transition-all duration-200 shadow-2xs",
+        "bg-white text-[#1a73e8] border border-[#dadce0] hover:bg-[#f8f9fa] hover:border-[#bdc1c6] active:scale-95",
+        compact ? "px-3 py-1 text-xs" : "px-4 py-2 text-xs sm:text-sm",
         className,
       )}
     >
-      <svg className="size-3.5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      <svg className="size-4 fill-[#1a73e8] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.28-.28.37-.68.25-1.02A11.36 11.36 0 0 1 8.56 4c0-.55-.45-1-1-1H4.01c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.62c0-.55-.45-1-1-1z" />
       </svg>
-      <span>{label}</span>
+      <span className="text-[#3c4043]">{label}</span>
     </span>
   );
 }
 
-/** Direct Telephone Calling Badge */
-export function PhoneBadge({ className, label, compact = false }: BadgeProps) {
+/** Official Chat Badge */
+export function ChatBadge({ className, label = "Live Chat", compact = false }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium transition-transform duration-150 active:scale-95",
-        "bg-slate-900 text-white shadow-2xs hover:bg-slate-800",
-        compact ? "px-2 py-0.5 text-xs" : "px-3 py-1 text-xs",
+        "inline-flex items-center gap-2 rounded-full font-semibold transition-all duration-200 shadow-2xs",
+        "bg-[#1fa855] text-white hover:bg-[#1b934b] active:scale-95 border border-[#1b934b]",
+        compact ? "px-3 py-1 text-xs" : "px-4 py-2 text-xs sm:text-sm",
         className,
       )}
     >
-      <svg className="size-3.5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-      </svg>
-      <span>{label || "Call Desk"}</span>
+      <WhatsAppIcon className="size-4 shrink-0" />
+      <span>{label}</span>
     </span>
   );
 }

@@ -1,85 +1,86 @@
 import { Link } from "@tanstack/react-router";
 import { site, services, whatsappUrl } from "@/data/site";
-import {
-  WhatsAppBadge,
-  GmailBadge,
-  GoogleMapsBadge,
-  LinkedInBadge,
-  FacebookBadge,
-} from "@/components/ui/official-badges";
+import { WhatsAppBadge, GmailBadge, GoogleMapsBadge } from "@/components/ui/official-badges";
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-slate-800 bg-slate-950 text-slate-300">
-      {/* Top Banner inside Footer */}
-      <div className="border-b border-slate-800/80 bg-slate-900/60 py-6 px-4 sm:px-6">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+    <footer className="border-t border-black/[0.06] bg-[#f5f5f7] text-[#86868b]">
+      {/* Upper clean contact bar */}
+      <div className="border-b border-black/[0.06] py-8 px-4 sm:px-6">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <p className="text-xs font-semibold tracking-wider text-amber-400 uppercase">
+            <p className="text-xs font-semibold tracking-wider text-[#1d1d1f] uppercase">
               Harare Machinery Desk · Cranborne Yard
             </p>
-            <p className="mt-1 text-sm font-medium text-slate-200">
-              Need immediate pricing or crane dispatch? Speak with an engineer right now.
+            <p className="mt-0.5 text-xs text-[#86868b]">
+              Direct supply, plant hire, and on-site commissioning across Zimbabwe.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <a href={whatsappUrl("Hello Omnicore — I need a fast equipment quote.")}>
+            <a href={whatsappUrl("Hello Omnicore — I need a machinery quote.")}>
               <WhatsAppBadge label="WhatsApp +263 77 733 4569" />
             </a>
             <a href={site.address.maps} target="_blank" rel="noopener noreferrer">
-              <GoogleMapsBadge label="View on Google Maps" />
+              <GoogleMapsBadge label="View Yard on Maps" />
             </a>
             <a href={`mailto:${site.email}`}>
-              <GmailBadge label="Email Harare Desk" />
+              <GmailBadge label="Email Desk" />
             </a>
           </div>
         </div>
       </div>
 
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
-        {/* Brand identity */}
+        {/* Brand column */}
         <div className="md:col-span-1">
-          <Link to="/" className="inline-flex items-center gap-3 group">
-            {/* White transparent logo - strictly no white tile! */}
+          <Link to="/" className="inline-flex items-center gap-2.5 group">
             <img
-              src="/mark-transparent-white.png"
+              src="/mark.png"
               alt="Omnicore Solutions Logo"
-              className="size-10 object-contain transition-transform duration-200 group-hover:scale-105"
+              className="size-8 object-contain transition-transform duration-200 group-hover:scale-105"
             />
-            <div className="flex flex-col">
-              <span className="text-base font-bold tracking-tight text-white">
-                {site.name}
-              </span>
-              <span className="text-xs text-slate-400">Engineering & Machinery</span>
-            </div>
+            <span className="text-sm font-semibold tracking-tight text-[#1d1d1f]">
+              {site.name}
+            </span>
           </Link>
-          <p className="mt-4 text-xs leading-relaxed text-slate-400">
-            {site.tagline} Direct supply, equipment hire, and on-site plant commissioning from Cranborne, Harare — delivering to claims, farms and project sites nationwide.
+          <p className="mt-3 text-xs leading-relaxed text-[#86868b]">
+            Direct supply, equipment hire, and on-site plant commissioning from Cranborne, Harare — delivering to claims, farms and project sites nationwide.
           </p>
-          <div className="mt-5 flex items-center gap-2">
-            <a href="https://www.linkedin.com/company/omnicore-solutions-zw/" target="_blank" rel="noopener noreferrer">
-              <LinkedInBadge compact label="LinkedIn" />
+          <div className="mt-4 flex items-center gap-3 text-xs">
+            <a
+              href="https://www.linkedin.com/company/omnicore-solutions-zw/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors"
+            >
+              LinkedIn
             </a>
-            <a href="https://www.facebook.com/61564314670198" target="_blank" rel="noopener noreferrer">
-              <FacebookBadge compact label="Facebook" />
+            <span>·</span>
+            <a
+              href="https://www.facebook.com/61564314670198"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors"
+            >
+              Facebook
             </a>
           </div>
         </div>
 
-        {/* Services column */}
+        {/* Divisions */}
         <div>
-          <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">
-            Service Lines
+          <p className="text-xs font-semibold tracking-wider text-[#1d1d1f] uppercase">
+            Specialized Divisions
           </p>
-          <ul className="mt-4 space-y-2 text-xs">
+          <ul className="mt-3 space-y-2 text-xs">
             {services.map((service) => (
               <li key={service.slug}>
                 <Link
                   to="/services/$slug"
                   params={{ slug: service.slug }}
-                  className="text-slate-300 transition-colors hover:text-white hover:underline"
+                  className="text-[#6e6e73] transition-colors hover:text-[#1d1d1f]"
                 >
                   {service.title}
                 </Link>
@@ -88,83 +89,68 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        {/* Equipment & Company */}
+        {/* Navigation */}
         <div>
-          <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">
-            Equipment & Plant
+          <p className="text-xs font-semibold tracking-wider text-[#1d1d1f] uppercase">
+            Machinery & Fleet
           </p>
-          <ul className="mt-4 space-y-2 text-xs">
+          <ul className="mt-3 space-y-2 text-xs">
             <li>
-              <Link to="/catalogue" className="text-slate-300 hover:text-white hover:underline">
-                Complete Machinery Catalogue
+              <Link to="/catalogue" className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors">
+                Complete Catalogue
               </Link>
             </li>
             <li>
               <Link
                 to="/services/$slug"
                 params={{ slug: "hire" }}
-                className="text-slate-300 hover:text-white hover:underline"
+                className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors"
               >
                 Excavator & Plant Hire Rates
               </Link>
             </li>
             <li>
-              <Link to="/projects" className="text-slate-300 hover:text-white hover:underline">
-                Zimbabwe Site Deployments
+              <Link to="/projects" className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors">
+                Site Deployments
               </Link>
             </li>
             <li>
-              <Link to="/insights" className="text-slate-300 hover:text-white hover:underline">
-                Technical Plant Insights
+              <Link to="/insights" className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors">
+                Field Economics & Guides
               </Link>
             </li>
             <li>
-              <Link to="/quote" className="text-slate-300 hover:text-white hover:underline">
-                Request Tender / Price Quote
+              <Link to="/quote" className="text-[#6e6e73] hover:text-[#1d1d1f] transition-colors">
+                Request Tender Rate
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Harare Yard Desk */}
+        {/* Physical Cranborne Yard */}
         <div>
-          <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">
-            Harare Desk & Yard
+          <p className="text-xs font-semibold tracking-wider text-[#1d1d1f] uppercase">
+            Cranborne Yard
           </p>
-          <ul className="mt-4 space-y-2.5 text-xs text-slate-400">
-            <li className="text-slate-200">
-              <span className="font-semibold text-white block">Physical Yard:</span>
-              {site.address.line1}, {site.address.line2}
-            </li>
-            <li>
-              <span className="block text-slate-400">Hours: Mon–Fri 08:00–17:00 | Sat 08:00–13:00</span>
-            </li>
-            <li className="pt-1 flex flex-col gap-1.5">
-              <a
-                className="inline-flex items-center gap-1.5 text-slate-200 hover:text-white"
-                href={`tel:${site.phoneTel}`}
-              >
-                <span className="text-amber-400">Direct Call:</span> {site.phoneDisplay}
+          <div className="mt-3 space-y-2 text-xs text-[#86868b]">
+            <p className="text-[#1d1d1f] font-medium">115 Chiremba Rd, Cranborne, Harare</p>
+            <p>Mon–Fri: 08:00–17:00 · Sat: 08:00–13:00</p>
+            <div className="pt-1 flex flex-col gap-1">
+              <a href={`tel:${site.phoneTel}`} className="text-[#1d1d1f] hover:underline">
+                {site.phoneDisplay}
               </a>
-              <a
-                className="inline-flex items-center gap-1.5 text-slate-200 hover:text-white"
-                href={`mailto:${site.email}`}
-              >
-                <span className="text-sky-400">Direct Email:</span> {site.email}
+              <a href={`mailto:${site.email}`} className="text-[#1d1d1f] hover:underline">
+                {site.email}
               </a>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-slate-800/80 bg-slate-950 py-5">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>© {currentYear} {site.name}. Cranborne, Harare, Zimbabwe. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-xs">
-            <span>Zimbabwe Registration</span>
-            <span>·</span>
-            <span>Heavy Equipment & Engineering</span>
-          </div>
+      <div className="border-t border-black/[0.04] py-6 text-center text-[11px] text-[#86868b]">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 sm:flex-row sm:px-6">
+          <p>© {currentYear} {site.name}. All rights reserved.</p>
+          <p>Machinery & Plant Zimbabwe · Cranborne, Harare</p>
         </div>
       </div>
     </footer>

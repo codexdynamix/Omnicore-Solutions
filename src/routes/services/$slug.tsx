@@ -5,13 +5,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { EquipmentCard } from "@/components/equipment-card";
 import { MediaImage } from "@/components/media-image";
 import { QuoteForm } from "@/components/quote-form";
 import { equipment, getService, hireRates, whatsappUrl } from "@/data/site";
-import { WhatsAppBadge } from "@/components/ui/official-badges";
-import { ArrowRight, CheckCircle2, ShieldAlert, Sparkles } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/official-badges";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/services/$slug")({
   loader: ({ params }) => {
@@ -33,40 +32,40 @@ function ServicePage() {
   const related = equipment.filter((item) => item.category === service.slug);
 
   return (
-    <main>
+    <main className="pb-16">
       {/* Hero Section */}
-      <section className="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 sm:py-16 lg:grid-cols-2 lg:items-center">
+      <section className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 sm:py-20 lg:grid-cols-2 lg:items-center">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-              {service.eyebrow}
-            </span>
-            <span className="text-slate-300">·</span>
-            <span className="text-xs text-amber-600 font-semibold">Harare Cranborne Desk</span>
-          </div>
+          <span className="inline-block rounded-full bg-black/[0.04] px-3.5 py-1 text-xs font-medium text-[#1d1d1f]">
+            {service.eyebrow} · Cranborne Desk
+          </span>
 
-          <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-5xl">
             {service.headline}
           </h1>
 
-          <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-[#6e6e73]">
             {service.summary}
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg" className="rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold">
-              <Link to="/quote">Get Firm Quote</Link>
-            </Button>
+            <Link
+              to="/quote"
+              className="inline-flex h-11 items-center justify-center rounded-full bg-[#1d1d1f] px-6 text-xs font-medium text-white shadow-xs hover:bg-[#333336] transition-all"
+            >
+              Get Firm Quote
+            </Link>
             <a
               href={whatsappUrl(`Hello Omnicore Harare Desk, I need a direct quote for ${service.title}.`)}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-5 text-sm font-bold text-white shadow-xs hover:bg-[#20bd5a]"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1fa855] px-5 text-xs font-semibold text-white shadow-[0_4px_14px_rgba(31,168,85,0.25)] transition-all hover:bg-[#1b934b] active:scale-95"
             >
-              <WhatsAppBadge compact label="WhatsApp This Line" />
+              <WhatsAppIcon className="size-4 shrink-0" />
+              <span>Chat on WhatsApp</span>
             </a>
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-slate-100 shadow-md">
+        <div className="overflow-hidden rounded-3xl border border-black/[0.06] bg-[#f5f5f7] shadow-xs">
           <MediaImage
             src={service.image}
             alt={service.imageAlt}
@@ -75,19 +74,19 @@ function ServicePage() {
         </div>
       </section>
 
-      {/* Engineering Advantages */}
-      <section className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
-        <h3 className="text-xs font-bold tracking-widest text-slate-500 uppercase mb-4">
+      {/* Field Capabilities */}
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <h3 className="text-xs font-semibold tracking-wider text-[#86868b] uppercase mb-4">
           Field Capabilities & Zimbabwe Standards
         </h3>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2">
           {service.bullets.map((bullet) => (
             <div
               key={bullet}
-              className="flex items-start gap-3 rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs"
+              className="flex items-start gap-3 rounded-2xl border border-black/[0.06] bg-white p-5 transition-all"
             >
               <CheckCircle2 className="size-4 shrink-0 text-emerald-600 mt-0.5" />
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+              <p className="text-xs sm:text-sm text-[#1d1d1f] leading-relaxed">
                 {bullet}
               </p>
             </div>
@@ -95,32 +94,29 @@ function ServicePage() {
         </div>
       </section>
 
-      {/* Plant Hire Rates Table (if hire line) */}
+      {/* Hire Rates Table if hire line */}
       {service.slug === "hire" ? (
-        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
+              <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
                 Plant Hire Rate Card
               </p>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
                 Wet and dry hire, firm transparency.
               </h2>
             </div>
             <a
               href={whatsappUrl("Hello Omnicore, I want to book equipment hire.")}
-              className="inline-flex items-center gap-1.5"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[#0071e3] hover:underline"
             >
-              <WhatsAppBadge compact label="Book Hire Dates on WhatsApp" />
+              <span>Book dates on WhatsApp</span>
+              <ArrowRight className="size-3" />
             </a>
           </div>
 
-          <p className="mt-2 max-w-2xl text-xs text-slate-500">
-            Daily and monthly hire rates quoted based on site location, mobilization, and operator requirement. Both wet (with certified operator & fuel options) and dry options available.
-          </p>
-
-          <div className="mt-6 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
-            <div className="hidden grid-cols-4 gap-4 border-b border-slate-200 bg-slate-50 px-6 py-3 text-xs font-bold tracking-wider text-slate-700 uppercase md:grid">
+          <div className="mt-6 overflow-hidden rounded-3xl border border-black/[0.06] bg-white shadow-xs">
+            <div className="hidden grid-cols-4 gap-4 border-b border-black/[0.06] bg-[#f5f5f7] px-6 py-3.5 text-xs font-semibold text-[#1d1d1f] uppercase tracking-wider md:grid">
               <span>Machinery Model</span>
               <span>Capacity / Output</span>
               <span>Wet Hire Rate</span>
@@ -129,16 +125,16 @@ function ServicePage() {
             {hireRates.map((row) => (
               <div
                 key={row.machine}
-                className="grid gap-1 border-b border-slate-100 px-6 py-4 transition-colors hover:bg-slate-50/80 last:border-0 md:grid-cols-4 md:gap-4 md:items-center"
+                className="grid gap-1 border-b border-black/[0.04] px-6 py-4 transition-colors hover:bg-black/[0.02] last:border-0 md:grid-cols-4 md:gap-4 md:items-center text-xs"
               >
-                <p className="font-bold text-slate-900 text-sm">{row.machine}</p>
-                <p className="text-xs text-slate-600 font-medium">{row.output}</p>
-                <div className="text-xs font-semibold text-slate-900">
-                  <span className="md:hidden text-slate-400 font-normal mr-1">Wet:</span>
+                <p className="font-semibold text-[#1d1d1f]">{row.machine}</p>
+                <p className="text-[#6e6e73]">{row.output}</p>
+                <div className="font-medium text-[#1d1d1f]">
+                  <span className="md:hidden text-[#86868b] mr-1">Wet:</span>
                   {row.wet}
                 </div>
-                <div className="text-xs text-slate-600">
-                  <span className="md:hidden text-slate-400 font-normal mr-1">Dry:</span>
+                <div className="text-[#6e6e73]">
+                  <span className="md:hidden text-[#86868b] mr-1">Dry:</span>
                   {row.dry}
                 </div>
               </div>
@@ -147,22 +143,11 @@ function ServicePage() {
         </section>
       ) : null}
 
-      {/* Equipment on this line */}
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+      {/* Equipment Grid */}
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
           Machinery in this division
         </h2>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {service.equipment.map((item) => (
-            <span
-              key={item}
-              className="rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-2xs"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
-
         {related.length > 0 ? (
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((item) => (
@@ -172,18 +157,18 @@ function ServicePage() {
         ) : null}
       </section>
 
-      {/* FAQ */}
+      {/* FAQs */}
       <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-          Technical & Commercial FAQs
+        <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
+          Frequently asked questions
         </h2>
-        <Accordion type="single" collapsible className="mt-4 rounded-xl border border-slate-200/90 bg-white p-4 shadow-xs">
+        <Accordion type="single" collapsible className="mt-4 rounded-3xl border border-black/[0.06] bg-white p-4 shadow-xs">
           {service.faqs.map((faq) => (
-            <AccordionItem key={faq.q} value={faq.q} className="border-b border-slate-100 last:border-0">
-              <AccordionTrigger className="text-sm font-bold text-slate-900 hover:text-sky-600">
+            <AccordionItem key={faq.q} value={faq.q} className="border-b border-black/[0.04] last:border-0">
+              <AccordionTrigger className="text-sm font-semibold text-[#1d1d1f] hover:text-[#0071e3] py-4">
                 {faq.q}
               </AccordionTrigger>
-              <AccordionContent className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <AccordionContent className="text-xs sm:text-sm text-[#6e6e73] leading-relaxed pb-4">
                 {faq.a}
               </AccordionContent>
             </AccordionItem>

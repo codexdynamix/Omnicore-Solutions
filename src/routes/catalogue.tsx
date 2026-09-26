@@ -1,11 +1,10 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search } from "lucide-react";
 import { EquipmentCard } from "@/components/equipment-card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { equipment, services, type Category, type Intent, whatsappUrl } from "@/data/site";
-import { WhatsAppBadge } from "@/components/ui/official-badges";
 
 type CatalogueSearch = {
   category?: Category;
@@ -77,30 +76,26 @@ function CataloguePage() {
   ];
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
+    <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
       {/* Header */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-            Machinery Inventory & Hire Fleet
-          </span>
-          <span className="text-slate-300">·</span>
-          <span className="text-xs text-amber-600 font-semibold">Harare Cranborne Yard</span>
-        </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-          Sale & plant hire catalogue.
+        <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
+          Inventory & Fleet · Cranborne Yard
+        </p>
+        <h1 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-5xl">
+          Machinery catalogue.
         </h1>
-        <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          Browse verified machinery in stock. Indicative USD pricing shown where standardized. Confirm availability, custom configurations, and nationwide transport directly on WhatsApp.
+        <p className="mt-1 max-w-2xl text-sm leading-relaxed text-[#6e6e73]">
+          Browse plant and industrial equipment in stock. Direct rates, wet/dry options, and nationwide transport arranged from Harare.
         </p>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="mt-8 rounded-xl border border-slate-200/90 bg-white p-4 shadow-xs space-y-4">
+      {/* Apple-style Filter & Search Console */}
+      <div className="mt-8 flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          {/* Search box */}
+          {/* Rounded-full Search bar */}
           <div className="relative flex-1 max-w-md">
-            <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-slate-400" />
+            <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-[#86868b]" />
             <Input
               value={query}
               onChange={(event) => {
@@ -108,48 +103,44 @@ function CataloguePage() {
                 setQuery(value);
                 setFilter({ q: value });
               }}
-              placeholder="Search crushers, concrete pumps, feed mills, excavators…"
-              className="pl-10 text-sm border-slate-200 focus:border-sky-500 rounded-lg"
+              placeholder="Search machinery, crushers, mixers…"
+              className="pl-11 h-11 text-xs rounded-full border-black/[0.08] bg-white shadow-2xs focus:border-[#0071e3]"
               aria-label="Search equipment"
             />
           </div>
 
-          {/* Mode Switch (Sale / Hire / All) */}
-          <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-1">
+          {/* Segmented Control for Intent */}
+          <div className="inline-flex rounded-full bg-black/[0.04] p-1 w-fit">
             {(["all", "sale", "hire"] as const).map((value) => (
               <button
                 key={value}
                 type="button"
                 onClick={() => setFilter({ intent: value })}
                 className={cn(
-                  "rounded-md px-3.5 py-1.5 text-xs font-semibold transition-all duration-150",
+                  "rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-150",
                   intent === value
-                    ? "bg-white text-slate-900 shadow-2xs"
-                    : "text-slate-600 hover:text-slate-900",
+                    ? "bg-white text-[#1d1d1f] shadow-2xs font-semibold"
+                    : "text-[#6e6e73] hover:text-[#1d1d1f]",
                 )}
               >
-                {value === "all" ? "All Options" : value === "sale" ? "For Sale" : "Plant Hire"}
+                {value === "all" ? "All" : value === "sale" ? "For Sale" : "Plant Hire"}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Category Chips Bar */}
-        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
-          <span className="text-xs font-semibold text-slate-400 mr-1 flex items-center gap-1">
-            <SlidersHorizontal className="size-3" />
-            Filter:
-          </span>
+        {/* Category Pills */}
+        <div className="flex flex-wrap items-center gap-1.5 pt-1">
           {chips.map((chip) => (
             <button
               key={chip.category}
               type="button"
               onClick={() => setFilter({ category: chip.category })}
               className={cn(
-                "rounded-md px-3 py-1 text-xs font-medium transition-colors duration-150",
+                "rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150",
                 category === chip.category
-                  ? "bg-slate-900 text-white font-semibold"
-                  : "bg-slate-50 text-slate-700 border border-slate-200/80 hover:bg-slate-100",
+                  ? "bg-[#1d1d1f] text-white"
+                  : "bg-black/[0.03] text-[#6e6e73] hover:text-[#1d1d1f] hover:bg-black/[0.06]",
               )}
             >
               {chip.label}
@@ -158,38 +149,37 @@ function CataloguePage() {
         </div>
       </div>
 
-      {/* Results Count & Quick Help */}
-      <div className="mt-6 flex items-center justify-between text-xs text-slate-500">
-        <span className="font-semibold text-slate-700">
-          Showing <strong className="text-slate-900">{filtered.length}</strong> available machine{filtered.length === 1 ? "" : "s"}
+      {/* Result stats */}
+      <div className="mt-8 flex items-center justify-between text-xs text-[#86868b] border-b border-black/[0.04] pb-3">
+        <span>
+          Showing <strong className="text-[#1d1d1f] font-medium">{filtered.length}</strong> items
         </span>
-
         <a
           href={whatsappUrl("Hello Omnicore Harare Desk — I am looking for a machine not listed on the website.")}
-          className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 hover:underline"
+          className="text-[#0071e3] hover:underline"
         >
-          <WhatsAppBadge compact label="Can't find a model? Ask on WhatsApp" />
+          Special order? Ask Harare Desk
         </a>
       </div>
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-10 text-center shadow-xs">
-          <h3 className="text-base font-bold text-slate-900">No machinery matched your filters</h3>
-          <p className="mt-1 text-xs text-slate-500">
-            We frequently have equipment in transit or arriving at Cranborne. Ask our desk directly.
+        <div className="mt-12 rounded-3xl border border-black/[0.06] bg-white p-12 text-center">
+          <h3 className="text-base font-semibold text-[#1d1d1f]">No machinery found</h3>
+          <p className="mt-1 text-xs text-[#86868b]">
+            We frequently have equipment arriving in Cranborne. Inquire directly on WhatsApp.
           </p>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-5 flex justify-center">
             <a
               href={whatsappUrl(`Hello Omnicore, I am searching for "${query}". Do you have this in stock?`)}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-[#20bd5a]"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#1d1d1f] px-5 py-2 text-xs font-medium text-white shadow-xs hover:bg-[#333336]"
             >
-              <WhatsAppBadge compact label="Inquire on WhatsApp" />
+              Ask on WhatsApp
             </a>
           </div>
         </div>
       ) : (
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item) => (
             <EquipmentCard key={item.id} item={item} />
           ))}

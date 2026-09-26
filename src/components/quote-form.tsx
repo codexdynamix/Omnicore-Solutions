@@ -1,13 +1,12 @@
 import { useState, type FormEvent } from "react";
-import { Check, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { services, whatsappUrl } from "@/data/site";
-import { WhatsAppBadge } from "@/components/ui/official-badges";
+import { WhatsAppBadge, WhatsAppIcon } from "@/components/ui/official-badges";
 
-const intents = ["Buy", "Hire", "Both", "Not sure"] as const;
+const intents = ["Buy", "Hire", "Both", "General"] as const;
 
 type QuoteFormProps = {
   defaultService?: string;
@@ -60,31 +59,32 @@ export function QuoteForm({ defaultService = "" }: QuoteFormProps) {
 
   if (sent) {
     return (
-      <div className="rounded-xl bg-white p-6 sm:p-8 border border-slate-200 shadow-md animate-in fade-in zoom-in-95 duration-200">
-        <div className="flex size-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-          <Check className="size-6" />
+      <div className="rounded-3xl bg-white p-8 sm:p-10 border border-black/[0.06] shadow-xs text-center">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+          <Check className="size-5" />
         </div>
-        <h3 className="mt-4 text-xl font-bold tracking-tight text-slate-900">
-          Ready to Send on WhatsApp
+        <h3 className="mt-4 text-xl font-semibold tracking-tight text-[#1d1d1f]">
+          Ready to send on WhatsApp
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          Your machinery inquiry has been formatted. Click below to launch your chat with the Omnicore Harare engineering desk.
+        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#6e6e73]">
+          Your machinery requirement is compiled. Launch WhatsApp to chat directly with our Cranborne engineering staff.
         </p>
 
-        <div className="mt-6 flex flex-col gap-3">
+        <div className="mt-6 flex flex-col gap-2.5 max-w-xs mx-auto">
           <a
             href={waUrl}
-            className="flex items-center justify-center gap-2 rounded-lg bg-[#25D366] px-5 py-3 text-sm font-bold text-white shadow-xs hover:bg-[#20bd5a] transition-colors"
+            className="flex items-center justify-center gap-2 rounded-full bg-[#1fa855] py-3 text-xs sm:text-sm font-semibold text-white shadow-[0_4px_14px_rgba(31,168,85,0.25)] hover:bg-[#1b934b] transition-all active:scale-95"
           >
-            <WhatsAppBadge compact label="Continue on WhatsApp" />
+            <WhatsAppIcon className="size-5 shrink-0" />
+            <span>Launch WhatsApp Desk</span>
           </a>
 
           <button
             type="button"
             onClick={() => setSent(false)}
-            className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors py-1"
+            className="text-xs text-[#86868b] hover:text-[#1d1d1f] transition-colors py-1"
           >
-            ← Modify inquiry details
+            ← Edit details
           </button>
         </div>
       </div>
@@ -94,38 +94,38 @@ export function QuoteForm({ defaultService = "" }: QuoteFormProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col rounded-xl bg-white p-6 sm:p-8 border border-slate-200/90 shadow-sm"
+      className="flex flex-col rounded-3xl bg-white p-6 sm:p-10 border border-black/[0.06] shadow-xs"
     >
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">
-            Request an Equipment Quote
+          <h2 className="text-xl font-semibold tracking-tight text-[#1d1d1f]">
+            Request equipment pricing
           </h2>
-          <p className="mt-1 text-xs text-slate-500">
-            Direct response from Cranborne desk with stock status & rates.
+          <p className="mt-0.5 text-xs text-[#86868b]">
+            Direct quote from Harare desk with stock status & rates.
           </p>
         </div>
-        <WhatsAppBadge compact label="Instant Quoting" />
+        <WhatsAppBadge compact label="Live Desk" />
       </div>
 
       <div className="mt-6 space-y-4">
         {/* Name and Phone */}
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-1.5">
-            <Label htmlFor="quote-name" className="text-xs font-semibold text-slate-700">
-              Your Name / Company *
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="space-y-1">
+            <Label htmlFor="quote-name" className="text-xs font-medium text-[#1d1d1f]">
+              Name / Company *
             </Label>
             <Input
               id="quote-name"
               name="name"
               required
-              placeholder="e.g. Tendai Moyo / Mazowe Mining Co."
-              className="rounded-lg text-sm border-slate-200 focus:border-sky-500"
+              placeholder="e.g. Tendai Moyo"
+              className="h-10 rounded-xl text-xs bg-[#fbfbfd] border-black/[0.08] focus:border-[#0071e3]"
             />
           </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="quote-phone" className="text-xs font-semibold text-slate-700">
-              WhatsApp / Mobile Phone *
+          <div className="space-y-1">
+            <Label htmlFor="quote-phone" className="text-xs font-medium text-[#1d1d1f]">
+              WhatsApp Phone *
             </Label>
             <Input
               id="quote-phone"
@@ -133,24 +133,24 @@ export function QuoteForm({ defaultService = "" }: QuoteFormProps) {
               type="tel"
               required
               placeholder="+263 7..."
-              className="rounded-lg text-sm border-slate-200 focus:border-sky-500"
+              className="h-10 rounded-xl text-xs bg-[#fbfbfd] border-black/[0.08] focus:border-[#0071e3]"
             />
           </div>
         </div>
 
-        {/* Intent Select (Buy / Hire / Both) */}
-        <div className="space-y-1.5">
-          <Label className="text-xs font-semibold text-slate-700">Inquiry Type</Label>
-          <div className="grid grid-cols-4 gap-2">
+        {/* Intent Segmented Selector */}
+        <div className="space-y-1">
+          <Label className="text-xs font-medium text-[#1d1d1f]">Inquiry Type</Label>
+          <div className="grid grid-cols-4 gap-1 p-1 rounded-full bg-black/[0.04]">
             {intents.map((item) => (
               <button
                 key={item}
                 type="button"
                 onClick={() => setSelectedIntent(item)}
-                className={`h-9 rounded-md text-xs font-medium transition-colors border ${
+                className={`h-8 rounded-full text-xs font-medium transition-all ${
                   selectedIntent === item
-                    ? "bg-slate-900 text-white border-slate-900 shadow-2xs"
-                    : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                    ? "bg-white text-[#1d1d1f] shadow-2xs font-semibold"
+                    : "text-[#6e6e73] hover:text-[#1d1d1f]"
                 }`}
               >
                 {item}
@@ -159,9 +159,9 @@ export function QuoteForm({ defaultService = "" }: QuoteFormProps) {
           </div>
         </div>
 
-        {/* Service Line Selection */}
-        <div className="space-y-1.5">
-          <Label htmlFor="quote-service" className="text-xs font-semibold text-slate-700">
+        {/* Service Line */}
+        <div className="space-y-1">
+          <Label htmlFor="quote-service" className="text-xs font-medium text-[#1d1d1f]">
             Machinery Category
           </Label>
           <select
@@ -169,55 +169,54 @@ export function QuoteForm({ defaultService = "" }: QuoteFormProps) {
             name="service"
             value={selectedService}
             onChange={(e) => setSelectedService(e.target.value)}
-            className="flex h-10 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-2xs focus:border-sky-500 focus:outline-hidden"
+            className="flex h-10 w-full rounded-xl border border-black/[0.08] bg-[#fbfbfd] px-3 text-xs text-[#1d1d1f] focus:border-[#0071e3] focus:outline-hidden"
           >
-            <option value="">Select machinery line...</option>
+            <option value="">Select machinery category...</option>
             {services.map((service) => (
               <option key={service.slug} value={service.title}>
-                {service.title} ({service.eyebrow})
+                {service.title}
               </option>
             ))}
           </select>
         </div>
 
-        {/* Site Location */}
-        <div className="space-y-1.5">
-          <Label htmlFor="quote-location" className="text-xs font-semibold text-slate-700">
-            Site / Delivery Location (in Zimbabwe)
+        {/* Location */}
+        <div className="space-y-1">
+          <Label htmlFor="quote-location" className="text-xs font-medium text-[#1d1d1f]">
+            Site / Delivery Location in Zimbabwe
           </Label>
           <Input
             id="quote-location"
             name="location"
-            placeholder="e.g. Kadoma Gold Claim, Norton Farm, Borrowdale Site"
-            className="rounded-lg text-sm border-slate-200 focus:border-sky-500"
+            placeholder="e.g. Kadoma Claim, Norton Farm, Harare Site"
+            className="h-10 rounded-xl text-xs bg-[#fbfbfd] border-black/[0.08] focus:border-[#0071e3]"
           />
         </div>
 
         {/* Message */}
-        <div className="space-y-1.5">
-          <Label htmlFor="quote-message" className="text-xs font-semibold text-slate-700">
-            Machine Specifications / Tonnes / Pour Volume
+        <div className="space-y-1">
+          <Label htmlFor="quote-message" className="text-xs font-medium text-[#1d1d1f]">
+            Machine Specifications / Output Requirements
           </Label>
           <Textarea
             id="quote-message"
             name="message"
             rows={3}
-            placeholder="Describe the machine you need, tonnes per hour, duration of hire or power requirements..."
-            className="rounded-lg text-sm border-slate-200 focus:border-sky-500 resize-none"
+            placeholder="Specify tonnage per hour, duration of hire, diesel or electric..."
+            className="rounded-xl text-xs bg-[#fbfbfd] border-black/[0.08] focus:border-[#0071e3] resize-none"
           />
         </div>
       </div>
 
-      <Button
+      <button
         type="submit"
-        className="mt-6 h-11 w-full rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-xs"
+        className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-full bg-[#1d1d1f] text-xs font-medium text-white shadow-xs hover:bg-[#333336] transition-colors"
       >
-        <Send className="size-4 mr-2" />
-        Generate Quote on WhatsApp
-      </Button>
+        <span>Format Quote on WhatsApp</span>
+      </button>
 
-      <p className="mt-3 text-center text-[11px] text-slate-500">
-        Strict confidentiality. No spam. Quoted directly by Harare engineering staff.
+      <p className="mt-2.5 text-center text-[11px] text-[#86868b]">
+        Direct response from Harare technical desk during working hours.
       </p>
     </form>
   );

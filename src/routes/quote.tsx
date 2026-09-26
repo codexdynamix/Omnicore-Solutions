@@ -1,13 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { QuoteForm } from "@/components/quote-form";
 import { site, whatsappUrl } from "@/data/site";
-import {
-  WhatsAppBadge,
-  GmailBadge,
-  PhoneBadge,
-  GoogleMapsBadge,
-} from "@/components/ui/official-badges";
-import { CheckCircle2, ShieldCheck, Clock, Truck } from "lucide-react";
+import { WhatsAppBadge, GmailBadge, PhoneBadge } from "@/components/ui/official-badges";
+import { ShieldCheck, Clock, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/quote")({
   head: () => ({
@@ -25,29 +20,23 @@ export const Route = createFileRoute("/quote")({
 
 function QuotePage() {
   return (
-    <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-20">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
         {/* Left Side: Information & Value Proof */}
         <div>
-          <div className="flex items-center gap-2">
-            <span className="relative flex size-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500" />
-            </span>
-            <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-              Harare Quoting Desk
-            </p>
-          </div>
+          <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
+            Harare Technical Desk
+          </p>
 
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-5xl">
             Send the site details. Receive a tender rate.
           </h1>
 
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Sale or hire. Wet or dry. We respond directly on WhatsApp with current Cranborne stock, freight lead-time, and a rate you can defend in a budget — not a marketing brochure.
+          <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#6e6e73]">
+            Direct supply or hire. Wet or dry. We respond directly on WhatsApp with current Cranborne stock, freight lead-time, and a transparent rate you can defend in a project budget.
           </p>
 
-          {/* Value points */}
+          {/* Value points - Apple clean style */}
           <div className="mt-8 space-y-3">
             {[
               {
@@ -58,35 +47,35 @@ function QuotePage() {
               {
                 icon: ShieldCheck,
                 title: "Pre-Tested Machinery",
-                desc: "Every diesel engine, hydraulic pump and electrical circuit tested before delivery.",
+                desc: "Every diesel engine, hydraulic circuit and mechanical drive tested before release.",
               },
               {
                 icon: Truck,
-                title: "Freight to All Provinces",
-                desc: "Direct lowbed delivery to claims, farms, and sites across Zimbabwe.",
+                title: "Freight Across All Provinces",
+                desc: "Direct lowbed delivery to claims, farms, and infrastructure sites across Zimbabwe.",
               },
             ].map((pt) => (
               <div
                 key={pt.title}
-                className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs"
+                className="flex items-start gap-3.5 rounded-2xl border border-black/[0.06] bg-white p-4 transition-all"
               >
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-700">
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f5f5f7] text-[#1d1d1f]">
                   <pt.icon className="size-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-slate-900">{pt.title}</h4>
-                  <p className="text-xs text-slate-500 mt-0.5">{pt.desc}</p>
+                  <h4 className="text-xs font-semibold text-[#1d1d1f]">{pt.title}</h4>
+                  <p className="text-xs text-[#86868b] mt-0.5">{pt.desc}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Official Channel Badges */}
-          <div className="mt-8 pt-6 border-t border-slate-200">
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-              Official Direct Channels
+          {/* Direct channels */}
+          <div className="mt-8 pt-6 border-t border-black/[0.04]">
+            <p className="text-xs font-semibold text-[#1d1d1f] mb-3">
+              Direct Contact
             </p>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-2">
               <a href={whatsappUrl("Hello Omnicore — I need a fast quote.")}>
                 <WhatsAppBadge label="WhatsApp +263 77 733 4569" />
               </a>

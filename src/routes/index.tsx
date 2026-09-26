@@ -1,51 +1,30 @@
-import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  ShieldCheck,
-  Wrench,
-  Truck,
-  MapPin,
-  Clock,
-  CheckCircle2,
-  ChevronRight,
-  Flame,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, CheckCircle2, MapPin, Truck, Wrench, Clock, ShieldCheck, PhoneCall, Sparkles } from "lucide-react";
 import { EquipmentCard } from "@/components/equipment-card";
 import { MediaImage } from "@/components/media-image";
 import { equipment, services, site, whatsappUrl } from "@/data/site";
-import {
-  WhatsAppBadge,
-  GmailBadge,
-  GoogleMapsBadge,
-} from "@/components/ui/official-badges";
+import { WhatsAppBadge, WhatsAppIcon } from "@/components/ui/official-badges";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
+      { title: "Heavy Machinery & Plant Zimbabwe | Omnicore Solutions Harare" },
       {
-        title: "Omnicore Solutions | Machinery for Zimbabwe’s Farms, Mines & Sites",
+        name: "description",
+        content:
+          "Direct supply, plant hire, and field commissioning from Cranborne, Harare. Gold wash plants, hammer mills, excavators, and construction hardware across Zimbabwe.",
       },
-      { name: "description", content: site.description },
     ],
   }),
   component: Home,
 });
 
 function Home() {
-  const [activeCategory, setActiveCategory] = useState<string>("all");
-
-  const featuredEquipment = equipment.filter((item) => {
-    if (activeCategory === "all") {
-      return ["jaw-crusher", "concrete-pump", "feed-mixer-1t", "excavator-hire", "generator", "electric-fence"].includes(item.id);
-    }
-    return item.category === activeCategory;
-  });
+  const featuredEquipment = equipment.slice(0, 6);
 
   return (
-    <main className="flex flex-col">
-      {/* Schema.org LocalBusiness structured data */}
+    <main className="relative overflow-hidden bg-white">
+      {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -67,339 +46,242 @@ function Home() {
         }}
       />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-14 sm:pt-14 sm:pb-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          {/* Header Tagline & Badges */}
-          <div className="flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-semibold text-slate-700 shadow-2xs">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-              </span>
-              <span>Harare Desk</span>
-              <span className="text-slate-300">|</span>
-              <span className="text-slate-500">Cranborne Dispatch Yard</span>
-              <span className="text-slate-300">|</span>
-              <span className="text-amber-600 font-bold">Nationwide Delivery</span>
-            </div>
+      {/* Luminous, Premium Light Industrial Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#fbfbfd] via-[#f4f5f8] to-white pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-black/[0.06]">
+        {/* Soft atmospheric gradient blurs for life and depth without darkness */}
+        <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 size-[650px] rounded-full bg-gradient-to-br from-amber-100/50 via-emerald-100/30 to-blue-100/40 blur-3xl" />
+        <div className="pointer-events-none absolute top-1/3 -right-24 size-[400px] rounded-full bg-amber-50/60 blur-2xl" />
 
-            <h1 className="mt-6 max-w-4xl text-4xl leading-[1.08] font-extrabold tracking-tight text-slate-900 sm:text-6xl md:text-7xl">
-              Heavy machinery for Zimbabwe’s{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-950 via-slate-800 to-amber-600">
-                farms, mines & sites.
-              </span>
-            </h1>
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            
+            {/* Left Content Column */}
+            <div className="lg:col-span-7">
+              {/* Clean Active Badge */}
+              <div className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-xs font-medium text-[#1d1d1f] shadow-2xs">
+                <span className="flex size-2 rounded-full bg-[#1fa855]" />
+                <span className="font-semibold text-[#1d1d1f]">Harare Cranborne Yard Active</span>
+                <span className="text-black/20">·</span>
+                <span className="text-[#6e6e73]">115 Chiremba Road</span>
+              </div>
 
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Buy, hire and commission verified industrial plant. Gold processing circuits, truck-mounted concrete pumps, commercial hammer mills, and hydraulic excavators. Handled directly by Cranborne engineers.
-            </p>
+              {/* Bold, Clean High-Contrast Headline */}
+              <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1d1d1f] leading-[1.08]">
+                Heavy machinery for Zimbabwe’s{" "}
+                <span className="text-[#0071e3]">mines</span>,{" "}
+                <span className="text-[#1fa855]">farms</span> & sites.
+              </h1>
 
-            {/* CTAs */}
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row w-full max-w-md">
-              <Button asChild size="lg" className="w-full sm:w-auto h-12 px-6 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-xs">
-                <Link to="/quote">
-                  <span>Get Firm Quote</span>
-                  <ArrowRight className="size-4 ml-2" />
+              {/* Clear, punchy description */}
+              <p className="mt-5 text-base sm:text-lg leading-relaxed text-[#515154] max-w-xl">
+                Direct equipment supply, hydraulic plant hire, and field commissioning from Cranborne. Gold processing circuits, hammer mills, concrete pumps, and excavators delivered and serviced nationwide.
+              </p>
+
+              {/* Action Buttons with toned, balanced green */}
+              <div className="mt-8 flex flex-wrap items-center gap-3.5">
+                {/* Balanced Toned-Down WhatsApp CTA */}
+                <a
+                  href={whatsappUrl("Hello Omnicore Harare Desk — I need a fast quote for machinery.")}
+                  className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-[#1fa855] px-6 text-sm font-semibold text-white shadow-[0_4px_16px_rgba(31,168,85,0.28)] transition-all hover:bg-[#1b934b] hover:scale-105 active:scale-95"
+                >
+                  <WhatsAppIcon className="size-5 shrink-0" />
+                  <span>Chat on WhatsApp</span>
+                </a>
+
+                {/* Request Firm Quote */}
+                <Link
+                  to="/quote"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#1d1d1f] px-6 text-sm font-medium text-white shadow-xs transition-all hover:bg-[#333336] hover:scale-105 active:scale-95"
+                >
+                  <span>Request Firm Quote</span>
+                  <ArrowRight className="size-4" />
                 </Link>
-              </Button>
 
-              <a
-                href={whatsappUrl("Hello Omnicore Harare Desk — I need a fast quote for machinery.")}
-                className="w-full sm:w-auto inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 text-sm font-bold text-white shadow-xs transition-all hover:bg-[#20bd5a] hover:shadow-sm active:scale-95"
-              >
-                <WhatsAppBadge compact label="Chat on WhatsApp" />
-              </a>
+                {/* Catalogue View */}
+                <Link
+                  to="/catalogue"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-black/[0.08] bg-white px-5 text-sm font-medium text-[#1d1d1f] shadow-2xs transition-all hover:bg-[#f5f5f7]"
+                >
+                  View Catalogue
+                </Link>
+              </div>
 
-              <Button asChild variant="outline" size="lg" className="w-full sm:w-auto h-12 px-5 rounded-lg border-slate-200 text-slate-800 hover:bg-slate-50">
-                <Link to="/catalogue">Catalogue</Link>
-              </Button>
-            </div>
-          </div>
-
-          {/* Hero Visual Showcase */}
-          <div className="relative mt-12 overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-900 shadow-xl">
-            <MediaImage
-              src="/images/hero.jpg"
-              alt="Heavy excavator and mining equipment on an infrastructure project in Zimbabwe at sunrise"
-              className="aspect-16/9 max-h-[580px] w-full object-cover"
-            />
-            {/* Gradient Protection overlay */}
-            <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none" />
-
-            {/* Floating Overlays */}
-            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900/80 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md border border-white/10 shadow-sm">
-                <ShieldCheck className="size-4 text-emerald-400" />
-                Tested & Commissioned in Zimbabwe
-              </span>
+              {/* Quick Trust Highlights */}
+              <div className="mt-8 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs font-medium text-[#6e6e73]">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-[#1fa855] shrink-0" />
+                  Pre-tested in Cranborne
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-[#1fa855] shrink-0" />
+                  Nationwide Lowbed Delivery
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-[#1fa855] shrink-0" />
+                  Commissioning Engineers on Call
+                </span>
+              </div>
             </div>
 
-            <div className="absolute right-4 bottom-4 left-4 sm:right-6 sm:bottom-6 sm:left-auto flex items-center justify-between sm:justify-end gap-3">
-              <div className="rounded-xl bg-slate-950/90 p-4 text-white backdrop-blur-md border border-white/10 max-w-xs shadow-lg">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
-                  Ready in Cranborne
-                </p>
-                <p className="mt-1 text-xs text-slate-300">
-                  Inspection, live test run, and crane loading available Mon–Sat.
-                </p>
-                <div className="mt-2.5 flex items-center gap-2">
-                  <a
-                    href={whatsappUrl("Hello! I would like to book a yard inspection in Cranborne.")}
-                    className="text-xs font-bold text-[#25D366] hover:underline inline-flex items-center gap-1"
-                  >
-                    <span>Book yard visit</span>
-                    <ArrowRight className="size-3" />
-                  </a>
+            {/* Right Visual Column - Hero Machinery Showcase Card */}
+            <div className="lg:col-span-5">
+              <div className="relative rounded-3xl border border-black/[0.08] bg-white p-3 shadow-[0_16px_40px_rgba(0,0,0,0.06)]">
+                {/* Rich machinery photograph */}
+                <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-gray-100">
+                  <img
+                    src="/images/hero.jpg"
+                    alt="Omnicore Heavy Excavators & Mining Plant in Zimbabwe"
+                    className="size-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                  />
+                  {/* Subtle corner badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-xs font-semibold text-[#1d1d1f] shadow-2xs">
+                      <Sparkles className="size-3.5 text-amber-500" />
+                      Ready for Site Dispatch
+                    </span>
+                  </div>
+
+                  <div className="absolute bottom-3 right-3">
+                    <span className="rounded-full bg-black/75 backdrop-blur-md px-2.5 py-1 text-[11px] font-medium text-white">
+                      Harare Fleet
+                    </span>
+                  </div>
+                </div>
+
+                {/* Key Spec Card docked beneath image */}
+                <div className="p-4 pt-3.5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-sm font-bold text-[#1d1d1f]">
+                        Heavy Earthmoving & Gold Circuits
+                      </h3>
+                      <p className="text-xs text-[#6e6e73] mt-0.5">
+                        Supply · Operator Hire · Workshop Spares
+                      </p>
+                    </div>
+                    <a
+                      href={`tel:${site.phoneTel}`}
+                      className="inline-flex items-center gap-1 rounded-full bg-[#0071e3]/10 px-3 py-1 text-xs font-semibold text-[#0071e3] hover:bg-[#0071e3]/15 transition-colors"
+                    >
+                      <PhoneCall className="size-3" />
+                      <span>{site.phoneDisplay}</span>
+                    </a>
+                  </div>
+
+                  {/* 3 Micro Specs */}
+                  <div className="mt-3 grid grid-cols-3 gap-2 border-t border-black/[0.06] pt-3 text-center">
+                    <div className="rounded-xl bg-[#f5f5f7] p-2">
+                      <p className="text-[10px] text-[#86868b] uppercase tracking-wider font-semibold">Tonnage</p>
+                      <p className="text-xs font-bold text-[#1d1d1f] mt-0.5">1–25 TPH</p>
+                    </div>
+                    <div className="rounded-xl bg-[#f5f5f7] p-2">
+                      <p className="text-[10px] text-[#86868b] uppercase tracking-wider font-semibold">Plant Hire</p>
+                      <p className="text-xs font-bold text-[#1d1d1f] mt-0.5">Dry / Wet</p>
+                    </div>
+                    <div className="rounded-xl bg-[#f5f5f7] p-2">
+                      <p className="text-[10px] text-[#86868b] uppercase tracking-wider font-semibold">Territory</p>
+                      <p className="text-xs font-bold text-[#1d1d1f] mt-0.5">All 10 Prov.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Quick Metrics Bar */}
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              { label: "Harare Hub", detail: "115 Chiremba Rd, Cranborne", icon: MapPin },
-              { label: "Direct Freight", detail: "Nationwide delivery to claim/site", icon: Truck },
-              { label: "Commissioning", detail: "Engineers on-site for run-up", icon: Wrench },
-              { label: "Quote Turnaround", detail: "Within 15 mins on WhatsApp", icon: Clock },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs"
-              >
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-700">
-                  <stat.icon className="size-4" />
+          </div>
+        </div>
+
+        {/* Floating KPI Strip Docked to Hero Bottom */}
+        <div className="mt-14 border-t border-black/[0.06] bg-white/70 backdrop-blur-sm">
+          <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {[
+                { label: "Harare Hub", detail: "115 Chiremba Rd, Cranborne", icon: MapPin },
+                { label: "Direct Freight", detail: "Nationwide lowbed delivery", icon: Truck },
+                { label: "Commissioning", detail: "Engineers on-site for run-up", icon: Wrench },
+                { label: "Quick Turnaround", detail: "Instant quote on WhatsApp", icon: Clock },
+              ].map((stat) => (
+                <div key={stat.label} className="flex items-center gap-3">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#f5f5f7] text-[#1d1d1f]">
+                    <stat.icon className="size-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-[#1d1d1f]">{stat.label}</p>
+                    <p className="text-[11px] text-[#86868b]">{stat.detail}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-bold text-slate-900">{stat.label}</p>
-                  <p className="text-[11px] text-slate-500 leading-tight mt-0.5">{stat.detail}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Seasonal Peak Banner */}
-      <section className="border-y border-amber-200/80 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 py-5">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-amber-500 text-white shadow-2xs">
-              <Flame className="size-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-amber-800">
-                Peak Season Booking · August – December
-              </p>
-              <p className="text-sm font-semibold text-slate-900">
-                High demand on gold milling plant, concrete pump hire, and wet-hire excavators.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <a
-              href={whatsappUrl("Hello Omnicore, I want to secure machinery for the current season.")}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-[#25D366] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#20bd5a]"
-            >
-              <WhatsAppBadge compact label="Lock In Seasonal Rate" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Portfolio Showcase (Varied Architectural Layout) */}
-      <section className="py-14 sm:py-20">
+      {/* Services Divisions Showcase */}
+      <section className="py-16 sm:py-24 border-t border-black/[0.04]">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-                5 Specialized Divisions
+              <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
+                Specialized Divisions
               </p>
-              <h2 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+              <h2 className="mt-1 text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
                 Machinery on the ground.
               </h2>
             </div>
             <Link
               to="/services"
-              className="inline-flex items-center text-xs font-bold text-slate-700 hover:text-slate-900 hover:underline"
+              className="inline-flex items-center text-xs font-medium text-[#0071e3] hover:underline"
             >
-              <span>View full service breakdown</span>
-              <ArrowRight className="size-3.5 ml-1" />
+              <span>View all five divisions</span>
+              <ArrowRight className="size-3 ml-1" />
             </Link>
           </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, index) => {
-              const isLarge = index === 0;
-              return (
-                <Link
-                  key={service.slug}
-                  to="/services/$slug"
-                  params={{ slug: service.slug }}
-                  className={`group relative flex flex-col justify-end overflow-hidden rounded-xl border border-slate-200/90 shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
-                    isLarge ? "sm:col-span-2 lg:col-span-2 min-h-[360px]" : "min-h-[300px]"
-                  }`}
-                >
-                  <MediaImage
-                    src={service.image}
-                    alt={service.imageAlt}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
-                  
-                  <div className="relative z-10 p-6 text-white">
-                    <span className="inline-block rounded-md bg-white/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur-xs text-white">
-                      {service.eyebrow}
-                    </span>
-                    <h3 className="mt-2 text-2xl font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="mt-1.5 max-w-lg text-xs leading-relaxed text-slate-200/90">
-                      {service.summary}
-                    </p>
-                    <div className="mt-4 inline-flex items-center text-xs font-semibold text-white group-hover:text-amber-300">
-                      <span>Explore specifications & rates</span>
-                      <ChevronRight className="size-4 ml-1 transition-transform group-hover:translate-x-1" />
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Equipment Grid with Interactive Tabs */}
-      <section className="border-t border-slate-200/80 bg-slate-50/70 py-14 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-                Inventory & Hire Fleet
-              </p>
-              <h2 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                Featured machinery in stock.
-              </h2>
-            </div>
-            <Link
-              to="/catalogue"
-              className="inline-flex items-center text-xs font-bold text-sky-700 hover:text-sky-900 hover:underline"
-            >
-              <span>Browse all 40+ machines</span>
-              <ArrowRight className="size-3.5 ml-1" />
-            </Link>
-          </div>
-
-          {/* Interactive Category Filter Pills */}
-          <div className="mt-6 flex flex-wrap gap-2">
-            {[
-              { id: "all", label: "Featured Selection" },
-              { id: "mining", label: "Mining & Gold Plant" },
-              { id: "hire", label: "Machinery Hire" },
-              { id: "hardware", label: "Concrete & Construction" },
-              { id: "farming", label: "Agriculture & Feed Mills" },
-            ].map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setActiveCategory(cat.id)}
-                className={`rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 ${
-                  activeCategory === cat.id
-                    ? "bg-slate-900 text-white shadow-2xs"
-                    : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-100"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Equipment Cards Grid */}
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredEquipment.map((item) => (
-              <EquipmentCard key={item.id} item={item} />
-            ))}
-          </div>
-
-          {/* Bottom Prompt */}
-          <div className="mt-10 flex flex-col items-center justify-center rounded-xl bg-white p-6 border border-slate-200 text-center shadow-xs sm:flex-row sm:justify-between sm:text-left">
-            <div>
-              <h4 className="text-base font-bold text-slate-900">
-                Looking for a custom processing circuit or specific tonnage?
-              </h4>
-              <p className="mt-1 text-xs text-slate-500">
-                We custom-engineer gold circuits, jaw crusher setups and feed plants to site specifications.
-              </p>
-            </div>
-            <div className="mt-4 sm:mt-0 flex gap-2">
-              <Button asChild size="sm" className="rounded-lg bg-slate-900 text-white">
-                <Link to="/quote">Request Custom Spec</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Regional Deployments Across Zimbabwe */}
-      <section className="py-14 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <p className="text-xs font-bold tracking-widest text-slate-500 uppercase">
-              Field Deployments
-            </p>
-            <h2 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-              Proven on Zimbabwe sites.
-            </h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Our machinery is working daily on mining claims, commercial agricultural schemes, and infrastructure pours across every province.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                region: "Kadoma & Kwekwe",
-                focus: "Gold Processing Circuits",
-                desc: "Ball mills, heavy jaw crushers, and shaking tables operational on hard-rock gold claims.",
-                tag: "Mining Sector",
-              },
-              {
-                region: "Greater Harare",
-                focus: "Boom Concrete Pumping",
-                desc: "37m truck-mounted pumps deployed on high-rise commercial structures and bridge decks.",
-                tag: "Construction Hire",
-              },
-              {
-                region: "Norton & Marondera",
-                focus: "Commercial Hammer Mills",
-                desc: "1-tonne/hr feed processing and mixing plants supplying poultry and cattle rations.",
-                tag: "Agribusiness",
-              },
-              {
-                region: "Mazowe & Bindura",
-                focus: "Tailings & Slurry Plants",
-                desc: "Centrifugal concentrators and slurry pumps maximizing fine-gold recovery.",
-                tag: "Mineral Extraction",
-              },
-            ].map((hub) => (
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((service) => (
               <div
-                key={hub.region}
-                className="flex flex-col justify-between rounded-xl bg-white p-5 border border-slate-200/90 shadow-xs"
+                key={service.slug}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.06] bg-white transition-all duration-300 hover:border-black/[0.12] hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] hover:-translate-y-0.5"
               >
                 <div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-slate-900">{hub.region}</span>
-                    <span className="text-[10px] font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-sm">
-                      {hub.tag}
-                    </span>
+                  <div className="relative aspect-16/10 overflow-hidden bg-[#f5f5f7]">
+                    <MediaImage
+                      src={service.image}
+                      alt={service.imageAlt}
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="rounded-full bg-white/90 backdrop-blur-md px-3 py-1 text-[11px] font-semibold text-[#1d1d1f] shadow-2xs">
+                        {service.eyebrow}
+                      </span>
+                    </div>
                   </div>
-                  <h4 className="mt-3 text-sm font-bold text-slate-800">{hub.focus}</h4>
-                  <p className="mt-1 text-xs text-slate-600 leading-relaxed">{hub.desc}</p>
+
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f]">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-[#6e6e73]">
+                      {service.summary}
+                    </p>
+                  </div>
                 </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-[11px] font-medium text-emerald-700">
-                  <CheckCircle2 className="size-3.5" />
-                  <span>Site Commissioned</span>
+
+                <div className="border-t border-black/[0.04] p-6 pt-4 flex items-center justify-between">
+                  <Link
+                    to="/services/$slug"
+                    params={{ slug: service.slug }}
+                    className="inline-flex items-center text-xs font-medium text-[#0071e3] hover:underline"
+                  >
+                    <span>Division details</span>
+                    <ArrowRight className="size-3 ml-1" />
+                  </Link>
+
+                  <a
+                    href={whatsappUrl(`Hello Omnicore, I am interested in ${service.title} equipment.`)}
+                    className="inline-flex items-center gap-1.5"
+                  >
+                    <WhatsAppBadge compact label="Inquire" />
+                  </a>
                 </div>
               </div>
             ))}
@@ -407,30 +289,156 @@ function Home() {
         </div>
       </section>
 
-      {/* Official Multi-Channel Contact & Tender Strip */}
-      <section className="border-t border-slate-200/80 bg-slate-900 py-12 text-white">
+      {/* Featured Equipment Grid */}
+      <section className="py-16 sm:py-24 bg-[#f5f5f7]/60 border-t border-black/[0.04]">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                Need pricing or plant availability today?
-              </h3>
-              <p className="mt-1 max-w-lg text-sm text-slate-300">
-                Contact the Harare Cranborne engineering desk directly through official verified channels.
+              <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
+                Ready For Dispatch
               </p>
+              <h2 className="mt-1 text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
+                Featured machinery catalogue.
+              </h2>
             </div>
+            <Link
+              to="/catalogue"
+              className="inline-flex items-center text-xs font-medium text-[#0071e3] hover:underline"
+            >
+              <span>Explore full 20+ item stock</span>
+              <ArrowRight className="size-3 ml-1" />
+            </Link>
+          </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <a href={whatsappUrl("Hello Omnicore Harare Desk — I need a fast quote.")}>
-                <WhatsAppBadge label="WhatsApp +263 77 733 4569" />
-              </a>
-              <a href={`mailto:${site.email}`}>
-                <GmailBadge label={site.email} />
-              </a>
-              <a href={site.address.maps} target="_blank" rel="noopener noreferrer">
-                <GoogleMapsBadge label="Cranborne Yard Map" />
-              </a>
-            </div>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredEquipment.map((item) => (
+              <EquipmentCard key={item.id} item={item} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & Engineering Commissioning Pillars */}
+      <section className="py-16 sm:py-24 border-t border-black/[0.04]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto">
+            <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
+              The Cranborne Standard
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-4xl">
+              Engineered for Zimbabwe conditions.
+            </h2>
+            <p className="mt-3 text-sm text-[#6e6e73] leading-relaxed">
+              We do not drop crates at the border. Omnicore delivers tested, robust machinery configured specifically for local ores, power grids, and demanding haul roads.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            {[
+              {
+                icon: ShieldCheck,
+                title: "Pre-Delivery Testing",
+                body: "Every jaw crusher, hammer mill, slurry pump, and diesel generator is mechanically run up in our Cranborne workshop before dispatch.",
+              },
+              {
+                icon: Wrench,
+                title: "On-Site Commissioning",
+                body: "Our mechanical staff travel with the plant to ensure foundation anchoring, alignment, electrical connections, and first-ton run-ups succeed.",
+              },
+              {
+                icon: Truck,
+                title: "Provincial Logistics",
+                body: "Direct lowbed and flatbed delivery arranged from Harare to Bulawayo, Kadoma, Gweru, Kwekwe, Mutare, Chinhoyi, and remote claims.",
+              },
+            ].map((pillar) => (
+              <div
+                key={pillar.title}
+                className="rounded-3xl border border-black/[0.06] bg-white p-8 transition-all hover:border-black/[0.12]"
+              >
+                <div className="flex size-11 items-center justify-center rounded-2xl bg-[#0071e3]/10 text-[#0071e3]">
+                  <pillar.icon className="size-5" />
+                </div>
+                <h3 className="mt-5 text-base font-semibold text-[#1d1d1f]">{pillar.title}</h3>
+                <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#6e6e73]">
+                  {pillar.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Provincial Deployment Strip */}
+      <section className="py-16 sm:py-20 bg-[#f5f5f7] border-t border-black/[0.04]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto">
+            <p className="text-xs font-semibold tracking-wider text-[#86868b] uppercase">
+              Nationwide Footprint
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
+              Active machinery across Zimbabwe.
+            </h2>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { city: "Midlands Province", focus: "Kwekwe · Gweru · Shurugwi", desc: "Gold milling circuits and trommel plants." },
+              { city: "Mashonaland West", focus: "Kadoma · Chinhoyi", desc: "Hammer mills, jaw crushers and excavators." },
+              { city: "Matabeleland", focus: "Bulawayo · Gwanda", desc: "Underground winches and high-tonnage ball mills." },
+              { city: "Harare & Surrounds", focus: "Cranborne · Msasa · Ruwa", desc: "Hydraulic plant hire, fence machines & mixers." },
+            ].map((hub) => (
+              <div
+                key={hub.city}
+                className="rounded-2xl border border-black/[0.06] bg-white p-5 shadow-2xs"
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-semibold text-[#1d1d1f]">{hub.city}</h4>
+                  <span className="size-2 rounded-full bg-emerald-500" />
+                </div>
+                <p className="mt-1 text-xs font-medium text-[#0071e3]">{hub.focus}</p>
+                <p className="mt-2 text-xs text-[#86868b] leading-relaxed">{hub.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* High-Impact Bottom Call to Action */}
+      <section className="py-20 bg-white border-t border-black/[0.04]">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
+          <span className="inline-block rounded-full bg-[#1fa855]/10 px-4 py-1 text-xs font-bold text-[#1fa855]">
+            Fast Turnaround · Direct Harare Support
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#1d1d1f] sm:text-4xl">
+            Need machinery specs, hire dates, or a firm quote?
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-[#6e6e73] leading-relaxed max-w-xl mx-auto">
+            Our Cranborne engineering team is ready to assist. Contact us via WhatsApp for instant stock photos, pro-forma invoices, and freight rates.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href={whatsappUrl("Hello Omnicore Harare Desk — I need a fast quote.")}
+              className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-[#1fa855] px-7 text-sm font-bold text-white shadow-[0_4px_16px_rgba(31,168,85,0.28)] transition-all hover:bg-[#1b934b] hover:scale-105 active:scale-95"
+            >
+              <WhatsAppIcon className="size-5 shrink-0" />
+              <span>WhatsApp Harare Desk</span>
+            </a>
+
+            <Link
+              to="/quote"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#1d1d1f] px-7 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#333336] hover:scale-105 active:scale-95"
+            >
+              Request Tender / Pro-Forma
+            </Link>
+
+            <a
+              href={`tel:${site.phoneTel}`}
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-6 text-sm font-medium text-[#1d1d1f] hover:bg-gray-50 transition-all"
+            >
+              <PhoneCall className="size-4 text-[#0071e3]" />
+              <span>Call +263 77 733 4569</span>
+            </a>
           </div>
         </div>
       </section>
